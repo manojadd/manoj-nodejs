@@ -72,6 +72,26 @@ router.post('/data/files', function (req, res, next) {
       return res.status(201).send();
     }
   });
+});
+
+router.get('/non-repeating-character', function (req, res, next) {
+  let {
+    name
+  } = req.query;
+  if (name == null) {
+    return res.status(400).json({
+      reason: "missing_input"
+    });
+  } else {
+    let char;
+    for(let i = 0;i<name.length;i++){
+      char = name.charAt(i);
+      if(name.indexOf(char) === i && name.indexOf(char,i+1) === -1){
+        return res.json({result:char});
+      }
+    }
+    return res.json({result:null});
+  }
 })
 
 router.use(function (err, req, res, next) {
